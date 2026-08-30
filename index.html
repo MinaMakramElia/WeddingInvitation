@@ -13,7 +13,7 @@
 
   <style>
     :root {
-      --bg-color: #FAF7F2;        /* Pure White Background */
+      --bg-color: #FFFFFF;        /* Pure White Background */
       --card-bg: #FFFFFF;          /* Pure White Container */
       --box-bg: #FAF7F2;           /* Soft Cream for Info Cards */
       --primary-accent: #C48B9F;   /* Floral Pink */
@@ -160,12 +160,105 @@
       letter-spacing: 0.5px;
     }
 
-    /* Action Button */
+    /* Wishes Section */
+    .wishes-section {
+      background-color: var(--box-bg);
+      border-radius: 20px;
+      padding: 24px 20px;
+      margin: 32px 0 24px 0;
+      text-align: left;
+    }
+
+    .wishes-title {
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .wishes-subtitle {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #E2DCD5;
+      border-radius: 12px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      background: #FFFFFF;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-accent);
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 30px;
+      background-color: var(--primary-accent);
+      color: #FFFFFF;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(196, 139, 159, 0.25);
+      transition: all 0.3s ease;
+      margin-top: 8px;
+    }
+
+    .btn-submit:hover {
+      background-color: #b37a8e;
+      transform: translateY(-2px);
+    }
+
+    .success-msg {
+      display: none;
+      text-align: center;
+      color: #5B8C5A;
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 12px;
+      margin-top: 10px;
+      background: #EAF4EA;
+      border-radius: 10px;
+    }
+
+    /* Action Buttons */
     .btn-group {
       display: flex;
       flex-direction: column;
       gap: 14px;
-      margin-top: 28px;
+      margin-top: 20px;
     }
 
     .btn {
@@ -180,13 +273,14 @@
     }
 
     .btn-secondary {
-      background-color: var(--primary-accent);
-      color: #FFFFFF;
-      box-shadow: 0 6px 18px rgba(196, 139, 159, 0.25);
+      border: 1.5px solid var(--secondary-accent);
+      color: var(--secondary-accent);
+      background: transparent;
     }
 
     .btn-secondary:hover {
-      background-color: #b37a8e;
+      background-color: var(--secondary-accent);
+      color: #FFFFFF;
       transform: translateY(-2px);
     }
   </style>
@@ -243,6 +337,26 @@
       </div>
     </div>
 
+    <div class="wishes-section" data-aos="fade-up" data-aos-duration="800">
+      <h2 class="wishes-title">Warm Wishes</h2>
+      <p class="wishes-subtitle">Leave a message for Mina & Aro</p>
+
+      <form id="wishesForm" action="https://formspree.io/f/xoeqjqgo" method="POST">
+        <div class="form-group">
+          <label for="guestName">Your Name</label>
+          <input type="text" id="guestName" name="name" class="form-control" placeholder="Enter your full name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="guestMessage">Your Wish / Message</label>
+          <textarea id="guestMessage" name="message" class="form-control" placeholder="Write your sweet wishes here..." required></textarea>
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn-submit">Send Wishes ✨</button>
+        <div id="successMsg" class="success-msg">Thank you! Your wish has been sent ❤️</div>
+      </form>
+    </div>
+
     <div class="btn-group" data-aos="fade-up" data-aos-duration="800">
       <a href="https://maps.app.goo.gl/vv3snLuyhHhoiGrAA" class="btn btn-secondary" target="_blank">View Location on Maps</a>
     </div>
@@ -264,7 +378,7 @@
       heroImg.style.transform = `translateY(${scrollPosition * 0.08}px) rotate(${scrollPosition * 0.01}deg)`;
     });
 
-    // Target date: Sept 26, 2026 @ 5:00 PM
+    // Countdown Timer (Sept 26, 2026 @ 5:00 PM)
     const weddingDate = new Date("2026-09-26T17:00:00").getTime();
 
     const timer = setInterval(function() {
@@ -282,6 +396,39 @@
       document.getElementById("minutes").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       document.getElementById("seconds").innerText = Math.floor((distance % (1000 * 60)) / 1000);
     }, 1000);
+
+    // Form Submission Handling via Fetch API (Prevents page reload)
+    const wishesForm = document.getElementById('wishesForm');
+    const successMsg = document.getElementById('successMsg');
+    const submitBtn = document.getElementById('submitBtn');
+
+    wishesForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      submitBtn.innerText = "Sending...";
+      submitBtn.disabled = true;
+
+      try {
+        const response = await fetch(wishesForm.action, {
+          method: 'POST',
+          body: new FormData(wishesForm),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          wishesForm.reset();
+          submitBtn.style.display = 'none';
+          successMsg.style.display = 'block';
+        } else {
+          submitBtn.innerText = "Send Wishes ✨";
+          submitBtn.disabled = false;
+          alert("Oops! There was a problem sending your wish. Please try again.");
+        }
+      } catch (error) {
+        submitBtn.innerText = "Send Wishes ✨";
+        submitBtn.disabled = false;
+        alert("Oops! There was a network error. Please try again.");
+      }
+    });
   </script>
 
 </body>
