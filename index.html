@@ -13,7 +13,7 @@
 
   <style>
     :root {
-      --bg-color: #FFFFFF;        
+      --bg-color: #FAF7F2;        
       --card-bg: #FFFFFF;          
       --box-bg: #FAF7F2;           
       --primary-accent: #C48B9F;   
@@ -45,16 +45,14 @@
       position: relative;
     }
 
-    /* Video Container Styling */
+    /* Video Container Styling (Fixed position, motion removed) */
     .illustration-container {
       width: 100%;
       max-width: 320px;
       margin: 0 auto 24px auto;
       border-radius: 20px;
       overflow: hidden;
-      will-change: transform;
-      transition: transform 0.1s linear;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      /* box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); */
     }
 
     .illustration-container video {
@@ -268,9 +266,9 @@
 
   <div class="container">
     
-    <div class="illustration-container" id="heroIllustration" data-aos="zoom-in" data-aos-duration="900">
+    <div class="illustration-container" data-aos="zoom-in" data-aos-duration="900">
       <video autoplay loop muted playsinline poster="edited-image.png">
-        <source src="our-video.mp4" type="video/mp4">
+        <source src="our-video_2.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
     </div>
@@ -383,12 +381,6 @@
           feed.appendChild(card);
         });
       }
-    });
-
-    const heroImg = document.getElementById('heroIllustration');
-    window.addEventListener('scroll', () => {
-      let scrollPosition = window.scrollY;
-      heroImg.style.transform = `translateY(${scrollPosition * 0.08}px) rotate(${scrollPosition * 0.01}deg)`;
     });
 
     const weddingDate = new Date("2026-09-26T17:00:00").getTime();
