@@ -13,20 +13,18 @@
 
   <style>
     :root {
-      --bg-color: #FAF7F2;        /* Pure White Background */
-      --card-bg: #FFFFFF;          /* Pure White Container */
-      --box-bg: #FAF7F2;           /* Soft Cream for Info Cards */
-      --primary-accent: #C48B9F;   /* Floral Pink */
-      --secondary-accent: #8DA9C4; /* Floral Soft Blue */
+      --bg-color: #FFFFFF;        
+      --card-bg: #FFFFFF;          
+      --box-bg: #FAF7F2;           
+      --primary-accent: #C48B9F;   
+      --secondary-accent: #8DA9C4; 
       --text-main: #333333;
       --text-muted: #666666;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Montserrat', sans-serif;
@@ -47,20 +45,24 @@
       position: relative;
     }
 
-    /* Sticker Wrapper */
+    /* Video Container Styling */
     .illustration-container {
       width: 100%;
       max-width: 320px;
       margin: 0 auto 24px auto;
-      filter: none;
+      border-radius: 20px;
+      overflow: hidden;
       will-change: transform;
       transition: transform 0.1s linear;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
     }
 
-    .illustration-container img {
+    .illustration-container video {
       width: 100%;
       height: auto;
       display: block;
+      border-radius: 20px;
+      object-fit: cover;
     }
 
     h1 {
@@ -88,18 +90,14 @@
       opacity: 0.5;
     }
 
-    /* Details Section Card */
     .details-box {
       background-color: var(--box-bg);
       border-radius: 20px;
       padding: 24px 20px;
       margin: 24px 0;
-      transition: transform 0.3s ease;
     }
 
-    .detail-item {
-      margin: 12px 0;
-    }
+    .detail-item { margin: 12px 0; }
 
     .detail-label {
       font-size: 0.8rem;
@@ -115,10 +113,8 @@
       color: var(--text-main);
     }
 
-    /* Countdown Section */
-    .timer-container {
-      margin: 32px 0;
-    }
+    /* Countdown */
+    .timer-container { margin: 32px 0; }
 
     .timer-title {
       font-size: 0.85rem;
@@ -139,11 +135,6 @@
       padding: 12px 14px;
       border-radius: 14px;
       min-width: 65px;
-      transition: transform 0.3s ease;
-    }
-
-    .time-unit:hover {
-      transform: translateY(-4px);
     }
 
     .number {
@@ -157,10 +148,9 @@
       font-size: 0.65rem;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
 
-    /* Wishes Section */
+    /* Wishes & Guestbook Section */
     .wishes-section {
       background-color: var(--box-bg);
       border-radius: 20px;
@@ -185,9 +175,7 @@
       margin-bottom: 20px;
     }
 
-    .form-group {
-      margin-bottom: 14px;
-    }
+    .form-group { margin-bottom: 14px; }
 
     .form-group label {
       display: block;
@@ -196,7 +184,6 @@
       letter-spacing: 1px;
       color: var(--text-muted);
       margin-bottom: 6px;
-      font-weight: 500;
     }
 
     .form-control {
@@ -207,19 +194,10 @@
       font-family: 'Montserrat', sans-serif;
       font-size: 0.95rem;
       background: #FFFFFF;
-      color: var(--text-main);
       outline: none;
-      transition: border-color 0.3s ease;
     }
 
-    .form-control:focus {
-      border-color: var(--primary-accent);
-    }
-
-    textarea.form-control {
-      resize: vertical;
-      min-height: 90px;
-    }
+    textarea.form-control { resize: vertical; min-height: 80px; }
 
     .btn-submit {
       width: 100%;
@@ -229,31 +207,39 @@
       background-color: var(--primary-accent);
       color: #FFFFFF;
       font-weight: 600;
-      font-size: 0.95rem;
       cursor: pointer;
       box-shadow: 0 6px 18px rgba(196, 139, 159, 0.25);
-      transition: all 0.3s ease;
-      margin-top: 8px;
     }
 
-    .btn-submit:hover {
-      background-color: #b37a8e;
-      transform: translateY(-2px);
+    .guestbook-feed {
+      margin-top: 24px;
+      max-height: 300px;
+      overflow-y: auto;
+      padding-right: 6px;
     }
 
-    .success-msg {
-      display: none;
-      text-align: center;
-      color: #5B8C5A;
-      font-weight: 500;
-      font-size: 0.95rem;
-      padding: 12px;
-      margin-top: 10px;
-      background: #EAF4EA;
-      border-radius: 10px;
+    .wish-card {
+      background: #FFFFFF;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      border-left: 3px solid var(--primary-accent);
     }
 
-    /* Action Buttons */
+    .wish-author {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .wish-text {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
     .btn-group {
       display: flex;
       flex-direction: column;
@@ -269,19 +255,12 @@
       text-decoration: none;
       font-weight: 600;
       font-size: 0.95rem;
-      transition: all 0.3s ease;
+      text-align: center;
     }
 
     .btn-secondary {
       border: 1.5px solid var(--secondary-accent);
       color: var(--secondary-accent);
-      background: transparent;
-    }
-
-    .btn-secondary:hover {
-      background-color: var(--secondary-accent);
-      color: #FFFFFF;
-      transform: translateY(-2px);
     }
   </style>
 </head>
@@ -290,7 +269,10 @@
   <div class="container">
     
     <div class="illustration-container" id="heroIllustration" data-aos="zoom-in" data-aos-duration="900">
-      <img src="edited-image.png" alt="Mina & Aro Illustration">
+      <video autoplay loop muted playsinline poster="edited-image.png">
+        <source src="our-video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
     </div>
 
     <div data-aos="fade-down" data-aos-duration="800">
@@ -318,43 +300,32 @@
     <div class="timer-container" data-aos="zoom-in-up" data-aos-duration="700">
       <p class="timer-title">Counting Down To The Celebration</p>
       <div class="countdown">
-        <div class="time-unit">
-          <span class="number" id="days">00</span>
-          <span class="label">Days</span>
-        </div>
-        <div class="time-unit">
-          <span class="number" id="hours">00</span>
-          <span class="label">Hours</span>
-        </div>
-        <div class="time-unit">
-          <span class="number" id="minutes">00</span>
-          <span class="label">Mins</span>
-        </div>
-        <div class="time-unit">
-          <span class="number" id="seconds">00</span>
-          <span class="label">Secs</span>
-        </div>
+        <div class="time-unit"><span class="number" id="days">00</span><span class="label">Days</span></div>
+        <div class="time-unit"><span class="number" id="hours">00</span><span class="label">Hours</span></div>
+        <div class="time-unit"><span class="number" id="minutes">00</span><span class="label">Mins</span></div>
+        <div class="time-unit"><span class="number" id="seconds">00</span><span class="label">Secs</span></div>
       </div>
     </div>
 
     <div class="wishes-section" data-aos="fade-up" data-aos-duration="800">
-      <h2 class="wishes-title">Warm Wishes</h2>
-      <p class="wishes-subtitle">Leave a message for Mina & Aro</p>
+      <h2 class="wishes-title">Guestbook & Wishes</h2>
+      <p class="wishes-subtitle">Leave a public wish for Mina & Aro</p>
 
-      <form id="wishesForm" action="https://formspree.io/f/xoeqjqgo" method="POST">
+      <form id="guestbookForm">
         <div class="form-group">
           <label for="guestName">Your Name</label>
-          <input type="text" id="guestName" name="name" class="form-control" placeholder="Enter your full name" required>
+          <input type="text" id="guestName" class="form-control" placeholder="Enter your name" required>
         </div>
 
         <div class="form-group">
-          <label for="guestMessage">Your Wish / Message</label>
-          <textarea id="guestMessage" name="message" class="form-control" placeholder="Write your sweet wishes here..." required></textarea>
+          <label for="guestMessage">Your Wish</label>
+          <textarea id="guestMessage" class="form-control" placeholder="Write your wish..." required></textarea>
         </div>
 
-        <button type="submit" id="submitBtn" class="btn-submit">Send Wishes ✨</button>
-        <div id="successMsg" class="success-msg">Thank you! Your wish has been sent ❤️</div>
+        <button type="submit" class="btn-submit">Post Wish ✨</button>
       </form>
+
+      <div class="guestbook-feed" id="guestbookFeed"></div>
     </div>
 
     <div class="btn-group" data-aos="fade-up" data-aos-duration="800">
@@ -364,12 +335,54 @@
   </div>
 
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
   <script>
-    AOS.init({
-      once: false,
-      mirror: true,
-      duration: 700,
-      easing: 'ease-out-cubic'
+    AOS.init({ once: false, mirror: true, duration: 700 });
+
+    const firebaseConfig = {
+      apiKey: "YOUR_FIREBASE_API_KEY",
+      authDomain: "minaarowedding.firebaseapp.com",
+      databaseURL: "https://minaarowedding-default-rtdb.firebaseio.com",
+      projectId: "minaarowedding",
+      storageBucket: "minaarowedding.appspot.com",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const wishesRef = db.ref("wishes");
+
+    document.getElementById('guestbookForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('guestName').value;
+      const message = document.getElementById('guestMessage').value;
+
+      wishesRef.push({
+        name: name,
+        message: message,
+        timestamp: Date.now()
+      });
+
+      document.getElementById('guestbookForm').reset();
+    });
+
+    wishesRef.on('value', (snapshot) => {
+      const feed = document.getElementById('guestbookFeed');
+      feed.innerHTML = '';
+      const data = snapshot.val();
+      
+      if (data) {
+        Object.values(data).reverse().forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'wish-card';
+          card.innerHTML = `<div class="wish-author">${item.name}</div><div class="wish-text">${item.message}</div>`;
+          feed.appendChild(card);
+        });
+      }
     });
 
     const heroImg = document.getElementById('heroIllustration');
@@ -378,58 +391,16 @@
       heroImg.style.transform = `translateY(${scrollPosition * 0.08}px) rotate(${scrollPosition * 0.01}deg)`;
     });
 
-    // Countdown Timer (Sept 26, 2026 @ 5:00 PM)
     const weddingDate = new Date("2026-09-26T17:00:00").getTime();
-
-    const timer = setInterval(function() {
+    setInterval(function() {
       const now = new Date().getTime();
       const distance = weddingDate - now;
-
-      if (distance < 0) {
-        clearInterval(timer);
-        document.querySelector(".countdown").innerHTML = "<h3>Today is the day!</h3>";
-        return;
-      }
-
+      if (distance < 0) return;
       document.getElementById("days").innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
       document.getElementById("hours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       document.getElementById("minutes").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       document.getElementById("seconds").innerText = Math.floor((distance % (1000 * 60)) / 1000);
     }, 1000);
-
-    // Form Submission Handling via Fetch API (Prevents page reload)
-    const wishesForm = document.getElementById('wishesForm');
-    const successMsg = document.getElementById('successMsg');
-    const submitBtn = document.getElementById('submitBtn');
-
-    wishesForm.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      submitBtn.innerText = "Sending...";
-      submitBtn.disabled = true;
-
-      try {
-        const response = await fetch(wishesForm.action, {
-          method: 'POST',
-          body: new FormData(wishesForm),
-          headers: { 'Accept': 'application/json' }
-        });
-
-        if (response.ok) {
-          wishesForm.reset();
-          submitBtn.style.display = 'none';
-          successMsg.style.display = 'block';
-        } else {
-          submitBtn.innerText = "Send Wishes ✨";
-          submitBtn.disabled = false;
-          alert("Oops! There was a problem sending your wish. Please try again.");
-        }
-      } catch (error) {
-        submitBtn.innerText = "Send Wishes ✨";
-        submitBtn.disabled = false;
-        alert("Oops! There was a network error. Please try again.");
-      }
-    });
   </script>
-
 </body>
 </html>
